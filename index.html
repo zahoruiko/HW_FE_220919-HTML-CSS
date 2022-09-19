@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #fff
+        }
+        ul {
+            padding: 0;
+        }
+        #wrapper {
+            display: flex;
+            flex-direction: row;
+        }
+        .nav-panel {
+            width: 140px;
+            background-color: #f9f9f9;
+            height: 99vh;
+            position: fixed;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        #nav-panel__site-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 30px 20px 20px;
+        }
+        #site-logo__image-wrapper {
+            display: flex;
+            vertical-align: bottom;
+            padding-right: 5px;
+        }
+        #site-logo__img {
+            height: 20px;
+        }
+        #site-logo__title-wrapper {
+            font-size: 20px;
+            font-weight: bold;
+            padding-bottom: 6px;
+        }
+        #main-menu {
+            padding-top: 50px;
+        }
+        .main-menu__item {
+            padding: 5px 10px 5px 30px;
+            border-left: 3px solid #f9f9f9;
+            font-size: 10px;
+            color: #888;
+            margin: 10px 0 10px 0;
+            transition: all 0.3s ease-out;
+        }
+        .main-menu__item:hover {
+            border-left: 3px solid gray;
+            color: #333;
+            cursor: pointer;
+        }
+        .main-menu__item--selected {
+            border-left: 3px solid black;
+            color: #000;
+            cursor: pointer;
+        }
+        .main-menu__link-style {
+            text-decoration: none;
+            color: #888;
+        }
+        .main-menu__link-style:hover {
+            text-decoration: none;
+            color: #333;
+        }
+        .main-menu__link-style--selected {
+            text-decoration: none;
+            color: #333;
+        }
+        #logout {
+            position: absolute;
+            bottom: 30px;
+            left: 0px;
+            padding: 5px 10px 5px 30px;
+            border-left: 3px solid #f9f9f9;
+            font-size: 10px;
+            color: #888;
+            margin: 10px 0 0px 0;
+        }
+        #logout:hover {
+            border-left: 3px solid gray;
+            color: #333;
+            transition: all 0.3s ease-out;
+            cursor: pointer;
+        }
+        .main-menu__icon-size {
+            font-size: 12px;
+        }
+
+        #courses {
+            margin-left: 140px;
+            background-color: white;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }        
+        #user-info-wrapper {
+            padding-left: 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        #user-avatar__size {
+            font-size: 28px;
+            background-color: lightskyblue;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        #user-info__name {
+            font-size: 13px;
+            font-weight: bold;
+        }
+        #user-info__location {
+            font-size: 9px;
+            color: #666;
+        }
+        #courses-user__wrapper {
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            height: 50px;
+            margin-top: 25px;
+            width: 100%;
+        }
+        #courses__search {
+            padding-right: 30px;
+        }
+        .search-form__input {
+            padding: 1px;
+            border: 1px solid #eee;
+        }
+        input::placeholder {
+            font: 8px sans-serif;
+            padding-left: 25px;
+        }
+        #search-form__button {
+            background-color: #333;
+            color: #fff;
+            font-weight: bold;
+            margin: 0;
+            border: none;
+            padding: 2px;
+            width: 25px;
+            cursor: pointer;
+        }
+        #courses-header__wrapper {
+            display: flex;
+            justify-content:space-between;
+            padding-left: 20px;
+            margin-top: 30px;
+        }
+        #courses-menu__header {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        #courses-menu__show-all {
+            font-size: 8px;
+            padding-top: 10px;
+            padding-right: 30px;
+        }
+        #courses-menu__show-all-link {
+            text-decoration: none;
+            color: #888;
+        }
+        #courses-menu__show-all-link:hover {
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease-out;
+        }
+        #courses-menu {
+            display: flex;
+            padding-left: 12px;
+        }
+        .courses-menu__item {
+            padding: 10px 0px 10px 10px;
+            font-size: 9px;
+            color: #999;
+        }
+        .courses-menu__item:hover {
+            color: #000;
+            transition: all 0.3s ease-out;
+            cursor: pointer;
+        }
+        .courses-menu__link-decoration {
+            text-decoration: none;
+            color: #999;
+        }
+        .courses-menu__link-decoration--selected {
+            text-decoration: none;
+            color: #000;
+        }
+        .courses-menu__link-decoration:hover {
+            text-decoration: none;
+            color: #000;
+            transition: all 0.3s ease-out;
+        }
+        #courses-list {
+            display: flex;
+            flex-direction: column;
+            margin-left: 17px;
+        }
+        .courses-list__item {
+            width: 92%;
+            border: 1px solid lightgray;
+            margin: 4px;
+            padding: 0px;
+            display: flex;
+        }
+        .courses-list__item:hover {
+            background-color: #eee;
+            border: 1px solid #666;
+            transition: all 0.3s ease-out;
+            cursor: pointer;
+        }
+        .courses-list__item-link {
+            text-decoration: none;
+            color: #333;
+        }
+        .course-item-img__wrapper {
+            height: 100%;
+            width: 180px;
+            display: flex;
+            align-items: center;
+        }
+        .course-item-img__wrapper>img {
+            width: 180px;
+            height: 110px;
+        }
+        .course-item-info__wrapper {
+            display: flex;
+            padding-top: 15px;
+            flex-direction: column;
+            margin-left: 20px;
+            width:250px;
+        }
+        .course-item-img__wrapper-right>img {
+            width: 180px;
+            height: 110px;
+        }
+        .course-item__title>h2 {
+            font-size: 14px;
+            padding: 0;
+            margin-bottom: 10px;
+        }
+        .course-item__theme-and-date {
+            font-size: 8px;
+            color: #666;
+            margin-bottom: 0px;
+            padding: 0;
+        }
+
+        #schedule {
+            width: 330px;
+            background-color: white;
+            margin-left: 0px;
+            border-left: 1px solid #eee;
+        }
+        #calendar {
+            display: flex;
+            flex-direction: column;
+            padding-left: 15px;
+        }
+        #schedule-header {
+            display: flex;
+            justify-content: space-between;
+            margin: 40px 25px 0px 25px;
+        }
+        #schedule-header__title {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        #schedule-month-selector {
+            border: 1px solid #eee;
+            background-color: white;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .calendar {
+            width: 300px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .calendar__item {
+            list-style: none;
+            width: calc(100%/7);
+            aspect-ratio: 1.1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            font-size: 8pt;
+            transition: all 0.3s ease-out;
+            text-decoration: none;
+        }
+        .calendar__item:hover {
+            cursor: pointer;
+            background-color: #bbb;
+            color: white;
+            font-size: 8pt;
+        }
+        .calendar__other-month {
+            color: #bbb;
+            text-decoration: none;
+        }
+        .calendar__active-day {
+            color: #fff;
+            background: #000;
+            text-decoration: none;
+        }
+        .calendar__header-style {
+            font-weight: bold;
+            font-size: 8pt;
+        }
+        .calendar__header-style:hover {
+            font-weight: bold;
+            font-size: 8pt;
+            cursor: auto;
+            background-color: #fff;
+            color: #000;
+        }
+
+        #events-list {
+            display: flex;
+            flex-direction: column;
+        }
+        #events-list__wrapper {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        #events-list-header__wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        #events-list-header__menu {
+            color: #555;
+        }
+        #events-list-header__menu:hover {
+            cursor: pointer;
+        }
+        #events-list {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+        }
+        .events-list__item {
+            display: flex;
+            margin: 0px 10px 0px 5px;
+        }
+        .events-list__item:hover {
+            display: flex;
+            margin: 0px 20px 0px 5px;
+            background-color: #eee;
+            transition: all 0.3s ease-out;
+        }
+        .events-list__item-time {
+            display: flex;
+            font-size: 12px;
+            color: #555;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            min-width: 50px;
+            padding: 5px;
+            margin-right: 5px;
+        }
+        .events-list__item-content {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            margin: 5px 0px 5px 0px;
+            width: 100%;
+        }
+        .events-list__item-content-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            min-width: 30px;
+            height: 30px;
+            min-height: 30px;
+            background-color: yellow;
+        }
+        .events-list__item-content-text {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+        }
+        .events-list__item-time-limit {
+            display: flex;
+            color: #555;
+            font-size: 8px;
+        }
+        .events-list__item-title {
+            color: #555;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+        .events-list__empty-item {
+            height: 12px;
+            width: 100%;
+            margin-right: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .events-list__empty-item-wrapper {
+            width: 100%;
+            height: 25px;
+        }
+
+        /* For mobile devices */
+        @media (max-width: 768px) {
+            .nav-panel {
+                transform: translateX(-140px);
+                transition: all 0.5s ease-out;
+            }
+            .nav-panel__open {
+                transform: translateX(0px);
+            }
+            #courses {
+                margin: 0;
+                width: 485px;
+            }
+            #burger {
+                text-align: center;
+            }
+            #wrapper {
+                flex-direction: column;
+            }
+            #schedule {
+                margin-left: 70px;
+                border-left: #fff;
+            }
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            var sidebar = document.querySelector('.nav-panel');
+            sidebar.classList.toggle('nav-panel__open')
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <aside class="nav-panel" onclick="toggleMenu()">
+            <div id="nav-panel__site-logo">
+                <div id="site-logo__image-wrapper">
+                    <img src="images/site-logo.png" alt="momo" title="momo" id="site-logo__img">
+                </div>
+                <div id="site-logo__title-wrapper">
+                    memo
+                </div>
+            </div>
+            <div id="main-menu">
+                <div class="main-menu__item main-menu__item--selected">
+                    <a href="#" class="main-menu__link-style main-menu__link-style--selected">
+                        <span class="main-menu__icon-size"><i class="las la-school"></i></span> Courses</a> 
+                </div>
+                <div class="main-menu__item">
+                    <a href="#" class="main-menu__link-style">
+                        <span class="main-menu__icon-size"><i class="las la-credit-card"></i></span> Payment</a> 
+                </div>
+                <div class="main-menu__item">
+                    <a href="#" class="main-menu__link-style">
+                        <span class="main-menu__icon-size"><i class="las la-comment-dots"></i></span> Chat</a> 
+                </div>
+                <div class="main-menu__item">
+                    <a href="#" class="main-menu__link-style">
+                        <span class="main-menu__icon-size"><i class="las la-users"></i></span> Groups</a> 
+                </div>
+                <div class="main-menu__item">
+                    <a href="#" class="main-menu__link-style">
+                        <span class="main-menu__icon-size"><i class="las la-graduation-cap"></i></i></span> Students</a> 
+                </div>
+                <div class="main-menu__item">
+                    <a href="#" class="main-menu__link-style">
+                        <span class="main-menu__icon-size"><i class="las la-life-ring"></i></span> Support</a> 
+                </div>
+            </div>
+            <div id="logout">
+                <div class="logout__img">
+                    <span class="main-menu__icon-size"><i class="las la-sign-out-alt"></i></span>
+                    <a href="#" class="main-menu__link-style">Logout</a> 
+                </div>
+            </div>
+        </aside>
+
+        <main id="courses">
+            <div id="courses-user__wrapper">
+                <div id="user-info-wrapper" onclick="toggleMenu()">
+                    <div class="user-avatar__wrapper">
+                        <div id="user-avatar__size">
+                            <i class="las la-user"></i>
+                        </div>
+                    </div>
+                    <div class="user-info__wrapper">
+                        <div id="user-info__name">
+                            Leslie Alexander
+                        </div>
+                        <div id="user-info__location">
+                            Los Angeles, CA
+                        </div>
+                    </div>    
+                </div>
+                <div id="courses__search">
+                    <form>
+                        <input class="search-form__input" type="text" placeholder="Search" size="10">
+                        <button id="search-form__button"><i class="las la-search"></i></button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="courses-header__wrapper">
+                <div id="courses-menu__header">Courses</div>
+                <div id="courses-menu__show-all">
+                    <a href="#" id="courses-menu__show-all-link">See all</a>
+                </div>
+            </div>
+
+            <div id="courses-menu">
+                <span class="courses-menu__item">
+                    <a href="#" class="courses-menu__link-decoration courses-menu__link-decoration--selected">All</a>
+                </span>
+                <span class="courses-menu__item">
+                    <a href="#" class="courses-menu__link-decoration">Current</a>
+                </span>
+                <span class="courses-menu__item">
+                    <a href="#" class="courses-menu__link-decoration">Pending</a>
+                </span>
+                <span class="courses-menu__item">
+                    <a href="#" class="courses-menu__link-decoration">Complited</a>
+                </span>
+            </div>
+
+            <div id="courses-list">
+                <a href="#" class="courses-list__item-link">
+                    <article class="courses-list__item">
+                        <div class="course-item-img__wrapper">
+                            <img src="images/course-item.png" alt="Course image">
+                        </div>
+                        <div class="course-item-info__wrapper">
+                            <div class="course-item__theme-and-date">Programming &bull; <time>Sep 09, 2022</time></div>
+                            <div class="course-item__title">
+                                <h2>Object-Oriented<br>Programming in Java</h2>
+                            </div>
+                        </div>
+                    </article>
+                </a>
+
+                <a href="#" class="courses-list__item-link">
+                    <article class="courses-list__item">                        
+                        <div class="course-item-img__wrapper">
+                            <img src="images/course-item.png" alt="Course image">
+                        </div>
+                        <div class="course-item-info__wrapper">
+                            <div class="course-item__theme-and-date">Programming &bull; <time>Sep 09, 2022</time></div>
+                            <div class="course-item__title">
+                                <h2>Object-Oriented<br>Programming in Kotlin</h2>
+                            </div>
+                        </div>
+                    </article>
+                </a>
+                
+                <a href="#" class="courses-list__item-link">
+                    <article class="courses-list__item">
+                        <div class="course-item-img__wrapper">
+                            <img src="images/course-item.png" alt="Course image">
+                        </div>
+                        <div class="course-item-info__wrapper">
+                            <div class="course-item__theme-and-date">Programming &bull; <time>Sep 09, 2022</time></div>
+                            <div class="course-item__title">
+                                <h2>Object-Oriented<br>Programming in Python</h2>
+                            </div>
+                        </div>  
+                    </article>
+                </a>
+
+                <a href="#" class="courses-list__item-link">
+                    <article class="courses-list__item">
+                        <div class="course-item-img__wrapper">
+                            <img src="images/course-item.png" alt="Course image">
+                        </div>
+                        <div class="course-item-info__wrapper">
+                            <div class="course-item__theme-and-date">Programming &bull; <time>Sep 09, 2022</time></div>
+                            <div class="course-item__title">
+                                <h2>Object-Oriented<br>Programming in C++</h2>
+                            </div>
+                        </div>  
+                    </article>
+                </a>
+                
+                <a href="#" class="courses-list__item-link">
+                    <article class="courses-list__item">
+                        <div class="course-item-img__wrapper">
+                            <img src="images/course-item.png" alt="Course image">
+                        </div>
+                        <div class="course-item-info__wrapper">
+                            <div class="course-item__theme-and-date">Programming &bull; <time>Sep 09, 2022</time></div>
+                            <div class="course-item__title">
+                                <h2>Object-Oriented<br>Programming in Swift</h2>
+                            </div>
+                        </div>  
+                    </article>
+                </a>
+            </div>
+        </main>
+        
+        <aside id="schedule">
+            <section id="schedule-section">
+                <div id="schedule-header">
+                    <div id="schedule-header__title">
+                        Schedule
+                    </div>
+                    <div id="schedule-header__month-selector">
+                        <form>
+                            <select name="months" id="schedule-month-selector">
+                                <option value="0">Month</option>
+                                <option value="1">Januar</option>
+                                <option value="2">Februar</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">Mai</option>
+                                <option value="6">Juni</option>
+                                <option value="7">Juli</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">Dezember</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <div id="calendar">
+                    <ul class="calendar">
+                        <li class="calendar__item calendar__header-style">Sun</li>
+                        <li class="calendar__item calendar__header-style">Mon</li>
+                        <li class="calendar__item calendar__header-style">Tue</li>
+                        <li class="calendar__item calendar__header-style">Wed</li>
+                        <li class="calendar__item calendar__header-style">Thu</li>
+                        <li class="calendar__item calendar__header-style">Fri</li>
+                        <li class="calendar__item calendar__header-style">Sat</li>
+                        <li class="calendar__item calendar__other-month">26</li>
+                        <li class="calendar__item calendar__other-month">27</li>
+                        <li class="calendar__item calendar__other-month">28</li>
+                        <li class="calendar__item calendar__other-month">29</li>
+                        <li class="calendar__item calendar__other-month">30</li>
+                        <li class="calendar__item">1</li>
+                        <li class="calendar__item">2</li>
+                        <li class="calendar__item">3</li>
+                        <li class="calendar__item">4</li>
+                        <li class="calendar__item calendar__active-day">5</li>
+                        <li class="calendar__item">6</li>
+                        <li class="calendar__item">7</li>
+                        <li class="calendar__item">8</li>
+                        <li class="calendar__item">9</li>
+                        <li class="calendar__item">10</li>
+                        <li class="calendar__item">11</li>
+                        <li class="calendar__item">12</li>
+                        <li class="calendar__item">13</li>
+                        <li class="calendar__item">14</li>
+                        <li class="calendar__item">15</li>
+                        <li class="calendar__item">16</li>
+                        <li class="calendar__item">17</li>
+                        <li class="calendar__item">18</li>
+                        <li class="calendar__item">19</li>
+                        <li class="calendar__item">20</li>
+                        <li class="calendar__item">21</li>
+                        <li class="calendar__item">22</li>
+                        <li class="calendar__item">23</li>
+                        <li class="calendar__item">24</li>
+                        <li class="calendar__item">25</li>
+                        <li class="calendar__item">26</li>
+                        <li class="calendar__item">27</li>
+                        <li class="calendar__item">28</li>
+                        <li class="calendar__item">29</li>
+                        <li class="calendar__item">30</li>
+                    </ul>
+                </div>
+            </section>
+            <section id="events-list__wrapper">
+                <div id="events-list-header__wrapper">
+                    <div id="events-list__header">
+                        Upcomming
+                    </div>
+                    <div id="events-list-header__menu">
+                        <b>...</b>
+                    </div>
+                </div>
+                <div id="events_list">
+                    <div>
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>09:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__empty-item-wrapper">
+                                    <div class="events-list__empty-item"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>10:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__item-content-image">
+                                    <i class="las la-bell"></i>
+                                </div>
+                                <div class="events-list__item-content-text">
+                                    <div class="events-list__item-time-limit">
+                                        <time>10:00 - 11:00</time>
+                                    </div>
+                                    <div class="events-list__item-title">
+                                        Graph QL
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>11:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__empty-item-wrapper">
+                                    <div class="events-list__empty-item"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>12:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__empty-item-wrapper">
+                                    <div class="events-list__empty-item"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>13:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__item-content-image">
+                                    <i class="las la-bell"></i>
+                                </div>
+                                <div class="events-list__item-content-text">
+                                    <div class="events-list__item-time-limit">
+                                        <time>10:00 - 11:00</time>
+                                    </div>
+                                    <div class="events-list__item-title">
+                                        Programming in Java & Kotlin<br>Lorem ipsum dolor sit amet, consectetur adipisicing 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>14:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__empty-item-wrapper">
+                                    <div class="events-list__empty-item"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>15:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__empty-item-wrapper">
+                                    <div class="events-list__empty-item"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>16:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__item-content-image">
+                                    <i class="las la-bell"></i>
+                                </div>
+                                <div class="events-list__item-content-text">
+                                    <div class="events-list__item-time-limit">
+                                        <time>10:00 - 11:00</time>
+                                    </div>
+                                    <div class="events-list__item-title">
+                                        Computer science
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="events-list__item">
+                            <div class="events-list__item-time">
+                                <time>17:00</time>
+                            </div>
+                            <div class="events-list__item-content">
+                                <div class="events-list__empty-item-wrapper">
+                                    <div class="events-list__empty-item"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </div>
+</body>
+</html>
